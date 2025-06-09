@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment #5</title>
+</head>
+<body>
+    <h1>Welcome to the Interactive Treasure Hunt!</h1>
+    <h1>Enter your details to solve the puzzle and find the treasure.</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Solve the Puzzle</button>
+    </form>
+
+    {% if result %}
+        <h2>Number Puzzle:</h2>
+        <p>{{ result.number_result }}</p>
+
+        <h2>Text Puzzle:</h2>
+        <p>Binary: {{ result.binary_message }}</p>
+        <p>Vowel Count: {{ result.vowel_count }}</p>
+
+        <h2>Treasure Hunt:</h2>
+        <p><strong>TreasureHunt:</strong></p>
+        <p>- The secret number is {{ result.secret_number }}.</p>
+        {% for att in result.attempts %}
+            <p>- Attempt {{ att.attempt }}: {{ att.guess }} ({{ att.feedback }})</p>
+        {% endfor %}
+        <p>- {{ result.treasure_summary }}</p>
+    {% endif %}
+</body>
+</html>
